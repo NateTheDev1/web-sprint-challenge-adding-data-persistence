@@ -23,6 +23,46 @@ server.post("/api/projects", (req, res) => {
     });
 });
 
+server.get("/api/resources", (req, res) => {
+  db.findResources()
+    .then((resources) => {
+      returnData(resources, res);
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+});
+
+server.post("/api/resources", (req, res) => {
+  db.addResources(req.body)
+    .then((created) => {
+      returnData(created, res);
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+});
+
+server.get("/api/tasks/:id", (req, res) => {
+  db.findTasks(req.params.id)
+    .then((tasks) => {
+      returnData(tasks, res);
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+});
+
+server.post("/api/tasks", (req, res) => {
+  db.addTasks(req.body)
+    .then((created) => {
+      returnData(created, res);
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+});
+
 function returnData(data, res) {
   res.status(200).json({ data: data });
 }

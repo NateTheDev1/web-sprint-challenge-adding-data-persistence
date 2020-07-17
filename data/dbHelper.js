@@ -20,8 +20,21 @@ function addTasks(task) {
   return db("tasks").insert(task);
 }
 
-function findTasks() {
-  return db("tasks");
+function findTasks(project_id) {
+  const { name, description } = db("projects").where(
+    project_id,
+    "=",
+    "project.id"
+  );
+  return db("tasks")
+    .where("project_id", "=", project_id)
+    .then((task) => {
+      return {
+        ...task,
+        description,
+        name,
+      };
+    });
 }
 
 module.exports = {
