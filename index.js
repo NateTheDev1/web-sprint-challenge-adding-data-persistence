@@ -63,6 +63,16 @@ server.post("/api/tasks", (req, res) => {
     });
 });
 
+server.get("/api/projects/:id/resources", (req, res) => {
+  db.getResourcesForProjects(req.params.id)
+    .then((resources) => {
+      returnData(resources, res);
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+});
+
 function returnData(data, res) {
   res.status(200).json({ data: data });
 }
