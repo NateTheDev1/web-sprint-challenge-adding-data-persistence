@@ -73,6 +73,16 @@ server.get("/api/projects/:id/resources", (req, res) => {
     });
 });
 
+server.get("/api/resourcesall/:id", (req, res) => {
+  db.getResourceProject(req.params.id)
+    .then((resources) => {
+      returnData(resources, res);
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+});
+
 function returnData(data, res) {
   res.status(200).json({ data: data });
 }

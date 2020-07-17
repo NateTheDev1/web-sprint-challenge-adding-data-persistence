@@ -44,6 +44,14 @@ function getResourcesForProjects(project_id) {
     .where("rfp.project_id", "=", project_id);
 }
 
+function getResourceProject(resource_id) {
+  return db("resources_for_project as rfp")
+    .select("resources.name", "resources.description", "projects.name")
+    .join("projects", "rfp.project_id", "=", "projects.id")
+    .join("resources", "rfp.resource_id", "=", "resources.id")
+    .where("resources.id", "=", resource_id);
+}
+
 module.exports = {
   findProjects,
   addProjects,
@@ -52,4 +60,5 @@ module.exports = {
   addTasks,
   findTasks,
   getResourcesForProjects,
+  getResourceProject,
 };
